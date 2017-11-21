@@ -19,5 +19,12 @@ def main(score):
         if count is 0:
         	population.getFittest().write("musicxml", "output/fittest.xml")
 
+
+
+
+
+
+
+
 if __name__ == '__main__':
     main(score)
