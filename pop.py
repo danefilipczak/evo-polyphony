@@ -4,7 +4,7 @@ import music21 as m21
 import random
 
 popSize = 10
-elitism = 3 #how many of the best survive at each generation
+elitism = 3  # how many of the best survive at each generation
 
 
 class Population:
@@ -16,18 +16,24 @@ class Population:
         length = self.template.quarterLength*2
         numVoices = len(self.template.parts)
         i = 0
-        #initialize population with random genes
+        # initialize population with random genes
         for i in range(0, popSize)
-        	genotype = []
+        	genotype = self.randomGenotype()
+            self.phenotypes.append(Phenotype(genotype, self.template))
+            
+
+    def getFittest(self):
+    	# should return a score
+        pass
+
+
+    def randomGenotype(self):
+    	genotype = []
         	for j in range(0, numVoices):
 				genotype.append([])
 				for k in range(0, int(length)):
 					genotype[j].append(random.randint(0, 21))
-            self.phenotypes.append(Phenotype(genotype, self.template))
-
-    def getFittest(self):
-    	#should return a score
-        pass
+		return genotype
 
     def develop(self):
         '''
@@ -56,15 +62,15 @@ class Population:
         '''
         # the array by fitness
 
-        #sort the phenotypes by their fitness in descending order
+        # sort the phenotypes by their fitness in descending order
        	self.phenotypes.sort(key=lambda x: x.fitness, reverse=True)
-       	#delete the worst ones
+       	# delete the worst ones
        	del self.phenotypes[-(len(self.phenotypes)-elitism):]
 
 
        	i = 0
        	while len(self.phenotypes)<popSize:
-       		#make a new genotype that's a mutation of one of the elites
+       		# make a new genotype that's a mutation of one of the elites
        		spawn = self.phenotypes[i].mutate()
        		self.phenotypes.append(Phenotype(spawn, self.template))
        		i+=1

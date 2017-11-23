@@ -27,4 +27,5 @@ def main(score):
 
 
 if __name__ == '__main__':
+	score = converter.parse("input/test1.xml")
     main(score)
