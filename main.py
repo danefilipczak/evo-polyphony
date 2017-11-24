@@ -10,17 +10,22 @@ def main(score):
     population = Population(score)
     fitness = -100000000000  # some rediculous arbitrarily low fitness
     count = 0
-    # while fitness < terminationFitness:
-    #     population.develop()
-    #     population.evaluate()
-    #     population.nextGen()
-    #     fitness = population.getHighestFitness()
+    generation = 0
+    while fitness < terminationFitness:
+        population.develop()
+        population.evaluate()
+        population.nextGen()
+        fitness = population.fittest.fitness
 
-    #     # save the fittest to disk every 100 generations
-    #     count += 1
-    #     count %= 100
-    #     if count is 0:
-    #         population.getFittest().write("musicxml", "output/fittest.xml")
+        # save the fittest to disk every 100 generations
+        count += 1
+        count %= 20
+        if count is 0:
+            population.fittest.phenotype.write("musicxml", "output/fittest.xml")
+
+        generation+=1
+        print('generation #', generation)
+        print('highest fitness', fitness)
 
 
 
@@ -29,8 +34,8 @@ def debug(score):
 	p = Population(score)
 	p.develop()
 	p.evaluate()
-	for phen in p.phenotypes:
-		print(phen.fitness)
+	p.nextGen()
+
 	# phen = Phenotype(p.randomGenotype(), p.template)
 	# print(phen.genotype)
 	# phen.develop()
@@ -39,4 +44,4 @@ def debug(score):
 if __name__ == '__main__':
     score = m21.converter.parse("input/test1.xml")
     # main(score)
-    debug(score)
+    main(score)

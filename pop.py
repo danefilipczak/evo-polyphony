@@ -69,8 +69,11 @@ class Population:
 
         # sort the phenotypes by their fitness in descending order
        	self.phenotypes.sort(key=lambda x: x.fitness, reverse=True)
+       	# store a reference to the fittest for easy access later
+       	self.fittest = self.phenotypes[0]
        	# delete the worst ones
        	del self.phenotypes[-(len(self.phenotypes)-elitism):]
+
 
 
        	i = 0
@@ -80,6 +83,8 @@ class Population:
        		self.phenotypes.append(Phenotype(spawn, self.template))
        		i+=1
        		i%=elitism
+
+
 
 
 if __name__ == '__main__':

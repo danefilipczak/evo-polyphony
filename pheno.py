@@ -25,7 +25,7 @@ class Phenotype:
 		self.template = template_
 		
 	def evaluate(self):
-		self.fitness = getConsonance(self.phenotype) + getParsimony(self.phenotype)
+		self.fitness = getConsonance(self.phenotype) 
 
 
 	def develop(self):
