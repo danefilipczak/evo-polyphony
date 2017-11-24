@@ -13,7 +13,7 @@ import random
 import copy
 mutationRate = 0.05
 import music21 as m21
-
+from fitness import *
 from overlay import overlayScores
 
 class Phenotype:
@@ -25,7 +25,7 @@ class Phenotype:
 		self.template = template_
 		
 	def evaluate(self):
-
+		self.fitness = getConsonance(self.phenotype) + getParsimony(self.phenotype)
 
 
 	def develop(self):
@@ -36,8 +36,10 @@ class Phenotype:
 		translation = self.scale(translation)
 
 		# overlay the template on top
-
 		self.phenotype = overlayScores(translation, self.template)
+		timeSig = self.template.flat.getElementsByClass(m21.meter.TimeSignature)[0]
+		# self.phenotype.parts[0].measures[0].insert(0, timSig)
+		self.phenotype.insert(0, timeSig)
 
 	def scale(self, score):
 		'''
@@ -51,7 +53,7 @@ class Phenotype:
 		return score
 
 
-	def translate():
+	def translate(self):
 		'''
 				translate thy genotype into a score.
 				for now, each voice is treated identically. 
@@ -65,10 +67,13 @@ class Phenotype:
 					#push in an eigth note
 					note = m21.note.Note()
 					note.pitch.ps = gene
+					note.quarterLength = 0.5
 					part.append(note)
 
-				elif gene is 20:
+				elif gene is 20 or len(part)==0:
 					#rest
+					rest = m21.note.Rest()
+					rest.quarterLength = 0.5
 					part.append(rest)
 				elif gene is 21:
 					#continue the last element

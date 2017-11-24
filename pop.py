@@ -3,8 +3,9 @@ from pheno import Phenotype
 import music21 as m21
 import random
 
-popSize = 10
+popSize = 5
 elitism = 3  # how many of the best survive at each generation
+
 
 
 class Population:
@@ -13,14 +14,14 @@ class Population:
         self.template = score
         self.phenotypes = []
         # the length of a genotype is the 'eighthLength' of the score
-        length = self.template.quarterLength*2
-        numVoices = len(self.template.parts)
+        
+        
         i = 0
         # initialize population with random genes
-        for i in range(0, popSize)
+        for i in range(0, popSize):
         	genotype = self.randomGenotype()
-            self.phenotypes.append(Phenotype(genotype, self.template))
-            
+        	self.phenotypes.append(Phenotype(genotype, self.template))
+
 
     def getFittest(self):
     	# should return a score
@@ -28,12 +29,16 @@ class Population:
 
 
     def randomGenotype(self):
+    	numVoices = len(self.template.parts)
+    	length = self.template.quarterLength*2
     	genotype = []
-        	for j in range(0, numVoices):
-				genotype.append([])
-				for k in range(0, int(length)):
-					genotype[j].append(random.randint(0, 21))
-		return genotype
+
+    	for j in range(0, len(self.template.parts)):
+    		genotype.append([])
+    		for k in range(0, int(length)):
+    			genotype[j].append(random.randint(0, 21))
+    	
+    	return genotype
 
     def develop(self):
         '''
