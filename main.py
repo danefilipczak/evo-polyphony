@@ -1,5 +1,5 @@
 # we'll stop the program running if the fitness gets this high.
-terminationFitness = -10
+terminationFitness = 0
 
 from pop import Population
 from pheno import Phenotype
@@ -17,11 +17,9 @@ def main(score):
         population.nextGen()
         fitness = population.fittest.fitness
 
-        # save the fittest to disk every 100 generations
-        count += 1
-        count %= 20
-        if count is 0:
-            population.fittest.phenotype.write("musicxml", "output/fittest.xml")
+        
+        
+        population.fittest.phenotype.write("musicxml", "output/fittest.xml")
 
         generation+=1
         print('generation #', generation)

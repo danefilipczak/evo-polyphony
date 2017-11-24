@@ -3,7 +3,7 @@ from pheno import Phenotype
 import music21 as m21
 import random
 
-popSize = 5
+popSize = 20
 elitism = 3  # how many of the best survive at each generation
 
 

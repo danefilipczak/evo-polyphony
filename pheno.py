@@ -25,7 +25,7 @@ class Phenotype:
 		self.template = template_
 		
 	def evaluate(self):
-		self.fitness = getConsonance(self.phenotype) 
+		self.fitness = getParsimony(self.phenotype)
 
 
 	def develop(self):
@@ -91,7 +91,9 @@ class Phenotype:
 
 		for voice in mutant:
 			for i in range(0, len(voice)):
-				if random.random() < mutationRate:
+				if random.random() < 0.318:
+					voice[i] = 21
+				elif random.random() < mutationRate:
 					voice[i] = random.randint(0, 21)
 		
 
