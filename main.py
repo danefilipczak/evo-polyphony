@@ -16,14 +16,11 @@ def main(score):
         population.evaluate()
         population.nextGen()
         fitness = population.fittest.fitness
-
-        
-        
-        population.fittest.phenotype.write("musicxml", "output/fittest.xml")
-
         generation+=1
         print('generation #', generation)
         print('highest fitness', fitness)
+
+        population.fittest.phenotype.write("musicxml", "output/generation" + str(generation) + ".xml")
 
 
 
@@ -40,6 +37,6 @@ def debug(score):
 	# phen.phenotype.show()
 
 if __name__ == '__main__':
-    score = m21.converter.parse("input/test1.xml")
+    score = m21.converter.parse("input/test2.xml")
     # main(score)
     main(score)

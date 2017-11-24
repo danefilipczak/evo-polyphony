@@ -29,12 +29,18 @@ def getConsonance(s):
     '''
     given a score, return a score representing how consonant the downbeats are.
     Depends on the beatStrength attribute of global time signatures.
+
+    Note that the chordify method will only make a new chord when a voice changes. 
+    Therefore it's possible for a dissonant chord to be assigned a relatiley low penalty when
+    it strikes on an unaccented beat, even if it has a long duration. 
+    A slightly better way might be to slice everything by eigth notes first if you run into this problem a lot. 
     '''
     fitness = 0
     chords = s.chordify()
     for c in chords.recurse().getElementsByClass('Chord'):
         if not c.isConsonant():
-            fitness -= c.beatStrength * consonanceScalar
+            # fitness -= c.beatStrength * consonanceScalar
+            fitness -= 1*consonanceScalar
             # print(c.measureNumber, c.beatStrength, c.beatStr, c.commonName)
     return fitness
 
