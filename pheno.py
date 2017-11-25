@@ -5,7 +5,7 @@ A genotype is a two dimensional array that holds the parts at the upper level an
 
 Pitch values are encoded as integers from 0 - 19, 
 which represents an octave and and fifth within whatever the range of the part is.
-20 represents a rest, and 21 represents a continuation of the note before it.
+21 represents a rest, and 20 represents a continuation of the note before it.
 woohoo
 '''
 
@@ -63,19 +63,22 @@ class Phenotype:
 			part = m21.stream.Part()
 			for gene in chromosome:
 
-				if gene<=19:
+				if gene<=19 or len(part)<1:
 					#push in an eigth note
 					note = m21.note.Note()
 					note.pitch.ps = gene
 					note.quarterLength = 0.5
 					part.append(note)
 
-				elif gene is 20 or len(part)==0:
-					#rest
-					rest = m21.note.Rest()
-					rest.quarterLength = 0.5
-					part.append(rest)
-				elif gene is 21:
+				# elif gene is 20 or len(part)==0:
+				# 	#rest
+				# 	rest = m21.note.Rest()
+				# 	rest.quarterLength = 0.5
+				# 	part.append(rest)
+
+
+
+				elif gene is 20:
 					#continue the last element
 					part[-1].quarterLength+=0.5
 			score.insert(0, part)
@@ -94,9 +97,9 @@ class Phenotype:
 				
 				if random.random() < mutationRate:
 					if random.random() < 0.318:
-						voice[i] = 21
+						voice[i] = 20
 					else:
-						voice[i] = random.randint(0, 21)
+						voice[i] = random.randint(0, 19)
 		
 
 		return mutant
