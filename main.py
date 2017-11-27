@@ -1,3 +1,12 @@
+'''
+		TODO:
+		debug beat strength scaling in consonance evaluation
+
+		Macroharmonic consistency
+'''
+
+
+
 # we'll stop the program running if the fitness gets this high.
 terminationFitness = 0
 
