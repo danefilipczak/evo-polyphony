@@ -14,6 +14,7 @@ class VoiceLeadingAnalyzer:
 
 	def __init__(self):
 		self.store = {}
+		self.result = []
 
 	def getVLQs(self, score, partNum1, partNum2):
 
@@ -29,40 +30,41 @@ class VoiceLeadingAnalyzer:
 		        partPairNumbers=[(partNum1, partNum2)])
 		    for vlq in vlqs:
 		        newKey = vlq.v1n1.getContextByClass('KeySignature')
-		        if newKey is None:
-		            if defaultKey is None:
-		                defaultKey = score.analyze('key')
-		            newKey = defaultKey
-		        vlq.key = newKey
-		        # vlq.key = getKeyAtMeasure(score, vlq.v1n1.measureNumber)
+		        # if newKey is None:
+		        #     if defaultKey is None:
+		        #         defaultKey = score.analyze('key')
+		        #     newKey = defaultKey
+		        # vlq.key = newKey
+
 		    allVLQs.extend(vlqs)
 		return allVLQs
 
 	def _identifyBasedOnVLQ(self, score, partNum1, partNum2, dictKey,
 		                        testFunction, textFunction=None,
-		                        color=None,
-		                        startIndex=0, endIndex=None, editorialDictKey=None,
+		                        color=None, editorialDictKey=None,
 		                        editorialValue=None, editorialMarkList=None):
 
 		result = []
 		if editorialMarkList is None:
 			editorialMarkList = []
 
+
 	    # self.addAnalysisData(score)
 		if partNum1 is None or partNum2 is None:
 			for (pN1, pN2) in self.getAllPartNumPairs(score):
 				self._identifyBasedOnVLQ(score, pN1, pN2, dictKey, testFunction,
-					textFunction, color,
-					startIndex, endIndex, editorialDictKey,
+					textFunction, color, editorialDictKey,
 					editorialValue, editorialMarkList)
 		else:
 
 		    vlqList = self.getVLQs(score, partNum1, partNum2)
-		    if endIndex is None and startIndex >= 0:
-		        endIndex = len(vlqList)
-		        
-			for vlq in vlqList[startIndex:endIndex]:
-				if testFunction(vlq) is not False:  # True or value
+		    # if endIndex is None and startIndex >= 0:
+		    #     endIndex = len(vlqList)
+
+		    for vlq in vlqList:
+			    
+			    if testFunction(vlq) is not False:  # True or value
+			    	# print(vlq)
 				    # tr = theoryResult.VLQTheoryResult(vlq)
 				    # tr.value = testFunction(vlq)
 				    # if textFunction is None:
@@ -75,8 +77,10 @@ class VoiceLeadingAnalyzer:
 				    # if color is not None:
 				    #     tr.color(color)
 				    # self._updateScoreResultDict(score, dictKey, tr)
-				    result.append(vlq)
-	    return result
+			    	self.result.append(vlq)
+
+		# print(result)
+		# return result
 
 
 	def getAllPartNumPairs(self, score):
@@ -94,6 +98,7 @@ class VoiceLeadingAnalyzer:
 	    return partNumPairs
 
 	def getParallelFifths(self, score, partNum1=None, partNum2=None):
+	    self.result = []
 	    '''
 	    Identifies all parallel fifths in score, or only the parallel fifths found between
 	    partNum1 and partNum2, and
@@ -101,15 +106,16 @@ class VoiceLeadingAnalyzer:
 	    '''
 	    sid = score.id
 	    testFunction = lambda vlq: vlq.parallelFifth()
-	    self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey='parallelFifths',
+	    return self._identifyBasedOnVLQ(score, partNum1, partNum2, dictKey='parallelFifths',
 	                        testFunction=testFunction)
 
-	    if self.store[sid]['ResultDict'] and 'parallelFifths' in self.store[sid]['ResultDict']:
-	        return [tr.vlq for tr in self.store[sid]['ResultDict']['parallelFifths']]
-	    else:
-	        return None
+	    # if self.store[sid]['ResultDict'] and 'parallelFifths' in self.store[sid]['ResultDict']:
+	    #     return [tr.vlq for tr in self.store[sid]['ResultDict']['parallelFifths']]
+	    # else:
+	    #     return None
 
 if __name__ == '__main__':
-	score = m21.corpus.parse('bach/bwv67.4')
+	score = m21.converter.parse('input/parallelTest1.xml')
 	vla = VoiceLeadingAnalyzer()
 	vla.getParallelFifths(score)
+	print(len(vla.result))
