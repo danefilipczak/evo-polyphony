@@ -24,6 +24,9 @@ parsimonyScalar = 0.005
 # 		timeSig = e.ratioString
 # 		break
 
+# def getVoiceLeading(s):
+    
+
 
 def getConsonance(s):
     '''
