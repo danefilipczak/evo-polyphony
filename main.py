@@ -29,7 +29,7 @@ def main(score):
         print('generation #', generation)
         print('highest fitness', fitness)
 
-        population.fittest.phenotype.write("musicxml", "output/generation" + str(generation) + ".xml")
+        population.fittest.phenotype.write("musicxml", "output/threevoice/generation" + str(generation) + ".xml")
 
 
 
