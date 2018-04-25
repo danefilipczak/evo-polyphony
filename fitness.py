@@ -49,6 +49,9 @@ def getConsonance(s):
 
 
 def getParsimony(s):
+    '''
+        
+    '''
     fitness = 0
     for part in s.getElementsByClass('Part'):
         notes = part.flat.notes

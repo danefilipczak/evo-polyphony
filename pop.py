@@ -16,7 +16,7 @@ class Population:
         # the length of a genotype is the 'eighthLength' of the score
         
         
-        i = 0
+        #i = 0
         # initialize population with random genes
         for i in range(0, popSize):
         	genotype = self.randomGenotype()
